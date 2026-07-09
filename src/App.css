@@ -1,0 +1,25 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.page-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 0;
+}
+
+.page-switcher button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.page-switcher button.active {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  color: white;
+}

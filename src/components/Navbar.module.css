@@ -1,0 +1,51 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.brandIcon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5, #818cf8);
+  color: white;
+  font-weight: 700;
+}
+
+.brand h2,
+.brand p {
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+.links a {
+  color: #4338ca;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dark {
+  background: #111827;
+  color: #f9fafb;
+  border-bottom-color: #374151;
+}
+
+.dark .links a {
+  color: #c7d2fe;
+}

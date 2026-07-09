@@ -1,0 +1,26 @@
+.button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  color: white;
+}
+
+.secondary {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.fullWidth {
+  width: 100%;
+}
