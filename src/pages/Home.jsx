@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Card from '../components/Card'
 import SectionHeader from '../components/SectionHeader'
 import StatRow from '../components/StatRow'
-import Footer from '../components/Footer'
 import styles from './Home.module.css'
 
 function Home() {
-  const [isDark, setIsDark] = useState(false)
 
   const stats = [
     { title: 'Collected', value: '₹4.8L', accent: 'linear-gradient(135deg, #4f46e5, #818cf8)' },
@@ -23,10 +19,9 @@ function Home() {
   ]
 
   return (
-    <div className={`${styles.page} ${isDark ? styles.dark : ''}`}>
-      <Navbar isDark={isDark} onToggleTheme={() => setIsDark(!isDark)} />
+    <div className={styles.page}>
       <div className={styles.content}>
-        <Sidebar isDark={isDark} />
+        <Sidebar />
         <main className={styles.main}>
           <section className={styles.hero} id="overview">
             <div>
@@ -69,7 +64,6 @@ function Home() {
           </section>
         </main>
       </div>
-      <Footer isDark={isDark} />
     </div>
   )
 }

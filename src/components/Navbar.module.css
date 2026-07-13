@@ -34,10 +34,17 @@
   gap: 1rem;
 }
 
-.links a {
+.link,
+.activeLink {
   color: #4338ca;
   text-decoration: none;
   font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+}
+
+.activeLink {
+  background: #e0e7ff;
 }
 
 .dark {
@@ -46,6 +53,11 @@
   border-bottom-color: #374151;
 }
 
-.dark .links a {
+.dark .link,
+.dark .activeLink {
   color: #c7d2fe;
+}
+
+.dark .activeLink {
+  background: #312e81;
 }

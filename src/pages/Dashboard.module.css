@@ -1,0 +1,64 @@
+.dashboardPage {
+  padding: 2rem 1.5rem 3rem;
+}
+
+.heroCard {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: #6366f1;
+  font-weight: 700;
+}
+
+.dashboardShell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.link,
+.activeLink {
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link {
+  color: #4338ca;
+}
+
+.activeLink {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  color: white;
+}
+
+.contentArea {
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 900px) {
+  .dashboardShell {
+    grid-template-columns: 1fr;
+  }
+}
