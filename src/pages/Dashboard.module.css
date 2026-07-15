@@ -57,8 +57,49 @@
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
+.overviewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.overviewGrid,
+.infoGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.overviewGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.infoGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.infoCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.infoCard h3 {
+  margin-top: 0;
+}
+
+.infoCard p {
+  margin: 0.35rem 0 0;
+  color: #475569;
+}
+
 @media (max-width: 900px) {
   .dashboardShell {
+    grid-template-columns: 1fr;
+  }
+
+  .overviewGrid,
+  .infoGrid {
     grid-template-columns: 1fr;
   }
 }

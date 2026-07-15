@@ -23,6 +23,9 @@ function Navbar({ isDark, onToggleTheme }) {
         <NavLink to="/dashboard" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
           Dashboard
         </NavLink>
+        <NavLink to="/login" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
+          Login
+        </NavLink>
         <NavLink to="/students" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
           Students
         </NavLink>
