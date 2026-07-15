@@ -1,4 +1,3 @@
-import Sidebar from '../components/Sidebar'
 import Card from '../components/Card'
 import SectionHeader from '../components/SectionHeader'
 import StatRow from '../components/StatRow'
@@ -21,7 +20,6 @@ function Home() {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        <Sidebar />
         <main className={styles.main}>
           <section className={styles.hero} id="overview">
             <div>
