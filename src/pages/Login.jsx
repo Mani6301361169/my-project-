@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { clearAuth, isAuthenticated, setAuth } from '../utils/auth'
+import { useAuth } from '../context/AuthContext'
 import styles from './Login.module.css'
 
 const roleDetails = {
@@ -23,10 +23,11 @@ function Login() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [message, setMessage] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated())
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const dragStartX = useRef(0)
+  const { login, user, logout } = useAuth()
 
   const activeRole = role && roleDetails[role] ? role : 'student'
 
@@ -35,30 +36,26 @@ function Login() {
       navigate('/login/student', { replace: true })
     }
 
-    if (isAuthenticated()) {
+    if (user) {
       setIsLoggedIn(true)
+      navigate(`/${user.role}-dashboard`, { replace: true })
     }
-  }, [role, navigate])
+  }, [role, navigate, user])
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((previous) => ({ ...previous, [name]: value }))
   }
 
-  const redirectToHome = () => {
-    if (window.location.hash) {
-      window.location.hash = '#/'
-      return
+  const loginUser = async () => {
+    try {
+      await login(formData.email, formData.password)
+      setIsLoggedIn(true)
+      setMessage(`Welcome to the ${roleDetails[activeRole].label} portal. Your secure login is ready.`)
+      navigate(`/${activeRole}-dashboard`, { replace: true })
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Login failed')
     }
-
-    navigate('/', { replace: true })
-  }
-
-  const loginUser = () => {
-    setAuth(activeRole)
-    setIsLoggedIn(true)
-    setMessage(`Welcome to the ${roleDetails[activeRole].label} portal. Your secure login is ready.`)
-    redirectToHome()
   }
 
   const handleSubmit = (event) => {
@@ -66,8 +63,8 @@ function Login() {
     loginUser()
   }
 
-  const handleLogout = () => {
-    clearAuth()
+  const handleLogout = async () => {
+    await logout()
     setIsLoggedIn(false)
     setFormData({ email: '', password: '' })
     setMessage('')

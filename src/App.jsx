@@ -1,41 +1,63 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Layout from './components/Layout'
+import { useAuth } from './context/AuthContext'
 import About from './pages/About'
+import AdminDashboard from './pages/AdminDashboard'
+import Contact from './pages/Contact'
+import Landing from './pages/Landing'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import DashboardOverview from './pages/DashboardOverview'
-import DashboardProfile from './pages/DashboardProfile'
-import DashboardSettings from './pages/DashboardSettings'
-import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import Registration from './pages/Registration'
-import StudentDetails from './pages/StudentDetails'
-import Students from './pages/Students'
-import { isAuthenticated } from './utils/auth'
+import ParentDashboard from './pages/ParentDashboard'
+import Register from './pages/Register'
+import StudentDashboard from './pages/StudentDashboard'
 
-function ProtectedRoute({ children }) {
-  return isAuthenticated() ? children : <Navigate to="/login/student" replace />
+function ProtectedRoute({ children, role }) {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return <div style={{ padding: '2rem' }}>Loading your dashboard...</div>
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (role && user.role !== role) {
+    return <Navigate to={`/${user.role}-dashboard`} replace />
+  }
+
+  return children
+}
+
+function DashboardRedirect() {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return <div style={{ padding: '2rem' }}>Loading...</div>
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
+
+  return <Navigate to={`/${user.role}-dashboard`} replace />
 }
 
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/login/:role" element={<Login />} />
-
       <Route element={<Layout />}>
-        <Route path="/" element={isAuthenticated() ? <Home /> : <Navigate to="/login/student" replace />} />
+        <Route path="/" element={<Landing />} />
         <Route path="about" element={<About />} />
-        <Route path="registration" element={<Registration />} />
-        <Route path="students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
-        <Route path="students/:id" element={<ProtectedRoute><StudentDetails /></ProtectedRoute>} />
-        <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
-          <Route index element={<Navigate to="overview" replace />} />
-          <Route path="overview" element={<DashboardOverview />} />
-          <Route path="profile" element={<DashboardProfile />} />
-          <Route path="settings" element={<DashboardSettings />} />
-        </Route>
+        <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
+        <Route path="login/:role" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="student-dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
+        <Route path="parent-dashboard" element={<ProtectedRoute role="parent"><ParentDashboard /></ProtectedRoute>} />
+        <Route path="admin-dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        <Route path="dashboard" element={<DashboardRedirect />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

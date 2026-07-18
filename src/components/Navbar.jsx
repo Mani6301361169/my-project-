@@ -1,8 +1,17 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { Button } from './Button'
 import styles from './Navbar.module.css'
 
 function Navbar({ isDark, onToggleTheme }) {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    await logout()
+    navigate('/login')
+  }
+
   return (
     <header className={`${styles.navbar} ${isDark ? styles.dark : ''}`}>
       <div className={styles.brand}>
@@ -20,23 +29,29 @@ function Navbar({ isDark, onToggleTheme }) {
         <NavLink to="/about" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
           About
         </NavLink>
-        <NavLink to="/dashboard" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
-          Dashboard
+        <NavLink to="/contact" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
+          Contact
         </NavLink>
-        <NavLink to="/login" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
-          Login
-        </NavLink>
-        <NavLink to="/students" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
-          Students
-        </NavLink>
-        <NavLink to="/registration" className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
-          Registration
-        </NavLink>
+        {user ? (
+          <NavLink to={`/${user.role}-dashboard`} className={({ isActive }) => (isActive ? styles.activeLink : styles.link)}>
+            Dashboard
+          </NavLink>
+        ) : null}
       </nav>
 
-      <Button variant="primary" onClick={onToggleTheme}>
-        {isDark ? '☀️ Light mode' : '🌙 Dark mode'}
-      </Button>
+      <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        {user ? (
+          <Button variant="primary" onClick={handleLogout}>Logout</Button>
+        ) : (
+          <>
+            <NavLink to="/login" className={styles.link}>Login</NavLink>
+            <NavLink to="/register" className={styles.link}>Register</NavLink>
+          </>
+        )}
+        <Button variant="primary" onClick={onToggleTheme}>
+          {isDark ? '☀️ Light' : '🌙 Dark'}
+        </Button>
+      </div>
     </header>
   )
 }
