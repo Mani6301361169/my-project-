@@ -1,66 +1,167 @@
 .page {
-  padding: 2rem 1.5rem;
+  min-height: 100vh;
   display: flex;
-  gap: 1.25rem;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #0a0a0a;
+  overflow: hidden;
+  position: relative;
+  padding: 1.5rem;
 }
 
-.hero {
-  background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  border-radius: 1rem;
-  padding: 1rem;
+.page::before {
+  content: '';
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(255, 213, 79, 0.2), transparent 70%);
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.lamp {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.lampDragging {
+  cursor: grabbing;
+}
+
+.wire {
+  width: 4px;
+  height: 170px;
+  background: #777;
+  margin: auto;
+}
+
+.shade {
+  width: 100px;
+  height: 45px;
+  background: #222;
+  border-radius: 50px 50px 10px 10px;
+  margin: auto;
+}
+
+.bulb {
+  width: 28px;
+  height: 28px;
+  background: #ffd54f;
+  border-radius: 50%;
+  margin: auto;
+  margin-top: -4px;
+  box-shadow:
+    0 0 20px #ffd54f,
+    0 0 50px #ffd54f,
+    0 0 90px #ffd54f;
+  animation: light 2s infinite alternate;
+}
+
+@keyframes light {
+  from {
+    box-shadow:
+      0 0 20px #ffd54f,
+      0 0 50px #ffd54f,
+      0 0 90px #ffd54f;
+  }
+
+  to {
+    box-shadow:
+      0 0 35px #fff176,
+      0 0 80px #fff176,
+      0 0 140px #fff176;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.loginBox {
+  width: min(100%, 360px);
+  padding: 45px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: show 1.2s ease;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loginBox h2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
 }
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.75rem;
-  color: #6366f1;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: #ffd54f;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.4rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.roleCard {
+.roleSwitcher {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  align-items: flex-start;
-  background: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 1px solid #eef2ff;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.roleButton,
+.roleButtonActive {
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
   cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.3s ease;
 }
 
-.roleCard h3 {
-  margin: 0.2rem 0;
+.roleButton {
+  background: transparent;
+  color: #d1d5db;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 0.6rem;
-  display: grid;
-  place-items: center;
-  color: white;
+.roleButtonActive {
+  background: #ffd54f;
+  color: #111;
   font-weight: 700;
-}
-
-.formCard {
-  max-width: 720px;
-  background: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
-  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
-}
-
-.formHeader h2 {
-  margin: 0.35rem 0 0.6rem;
 }
 
 .form {
@@ -69,34 +170,102 @@
   gap: 0.75rem;
 }
 
-.field span {
-  display: block;
-  font-weight: 700;
-  margin-bottom: 0.35rem;
+.inputBox {
+  position: relative;
+  margin-bottom: 0.5rem;
 }
 
-.field input {
-  padding: 0.6rem 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid #e6eef9;
+.inputBox input {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #999;
+  outline: none;
+  color: white;
+  font-size: 16px;
 }
 
-.message {
-  margin-top: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  background: #ecfdf5;
-  color: #065f46;
-  border-radius: 0.5rem;
+.inputBox span {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  color: #999;
+  transition: 0.4s;
+  pointer-events: none;
+}
+
+.inputBox input:focus ~ span,
+.inputBox input:valid ~ span {
+  top: -12px;
+  font-size: 13px;
+  color: #ffd54f;
+}
+
+.inputBox input:focus {
+  border-color: #ffd54f;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: #ffd54f;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.4s;
+  color: #111;
+  margin-top: 0.35rem;
+}
+
+.submitButton:hover {
+  background: #ffca28;
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px #ffd54f;
+}
+
+.message,
+.welcomeCard {
+  margin-top: 0.9rem;
+  padding: 0.8rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 213, 79, 0.12);
+  color: #fff3bf;
+  border: 1px solid rgba(255, 213, 79, 0.28);
+}
+
+.welcomeCard h3 {
+  margin: 0 0 0.25rem;
+  color: #fff;
+}
+
+.welcomeCard p {
+  margin: 0 0 0.8rem;
 }
 
 .footerLinks {
   display: flex;
-  gap: 1rem;
-  margin-top: 0.85rem;
+  justify-content: center;
+  margin-top: 0.9rem;
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
+.footerLinks a {
+  color: #ffd54f;
+  text-decoration: none;
+}
+
+.footerLinks a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .loginBox {
+    padding: 32px 24px;
+  }
+
+  .lamp {
+    top: -10px;
   }
 }
